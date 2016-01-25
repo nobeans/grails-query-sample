@@ -187,6 +187,9 @@ class WhereQuery_LearningSpec extends Specification {
 
         then:
         persons*.toString() == ['Fred Simpson', 'Bart Simpson'] // not including Bloggs!
+
+        expect: 'where() with criteria works well if there is in a same line of power-assert!'
+        Person.where { eq 'lastName', 'Simpson' }.list()*.toString() == ['Fred Simpson', 'Bart Simpson'] // not including Bloggs!
     }
 
 }
