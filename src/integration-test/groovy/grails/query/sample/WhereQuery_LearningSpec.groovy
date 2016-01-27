@@ -137,7 +137,7 @@ class WhereQuery_LearningSpec extends Specification {
         persons*.toString() == ['Bart Simpson']
     }
 
-    private static personNamedBart(String firstName_) {
+    private static firstName(String firstName_) {
         // AST transformation would apply to 'as DetachedCriteria<xxx>' pattern.
         // A direct return isn't supported. You have to bind it to a variable, and then return it.
         def callable = { firstName == firstName_ } as DetachedCriteria<Person>
@@ -146,13 +146,13 @@ class WhereQuery_LearningSpec extends Specification {
 
     def "where(): pre-declared Closure and Criteria can use parameters"() {
         given:
-        def personNamedSimpson = { String lastName_ ->
+        def lastName = { String lastName_ ->
             def callable = { eq 'lastName', lastName_ } as DetachedCriteria<Person>
             return callable
         }
 
         when:
-        def persons = Person.where(personNamedBart('Bart')).build(personNamedSimpson('Simpson')).list()
+        def persons = Person.where(firstName('Bart')).build(lastName('Simpson')).list()
 
         then:
         persons*.toString() == ['Bart Simpson']
